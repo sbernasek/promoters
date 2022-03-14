@@ -38,7 +38,7 @@ class TwoStateModel(TwoStateCell, Mutation):
 
     """
 
-    def __init__(self, name='X', k0=1, k1=1, k2=1, g0=1, g1=1, g2=1):
+    def __init__(self, name='X', k0=1, k1=1, k2=1, g0=1, g1=1, g2=1, include_activation=False):
         """
         Instantiate the two state model.
 
@@ -58,6 +58,8 @@ class TwoStateModel(TwoStateCell, Mutation):
 
             g2 (float) - protein decay rate constant
 
+            include_activation (bool) - indicates whether or not to include activation
+
         """
 
         self.name = name
@@ -67,7 +69,8 @@ class TwoStateModel(TwoStateCell, Mutation):
         super().__init__(genes=(self.name,), I=1, **gene_kw)
 
         # add transcriptional activation by input
-        self.add_activation(activator='IN', k=k0)
+        if include_activation:
+            self.add_activation(activator='IN', k=k0)
 
     def add_transcriptional_feedback(self,
             k=None,
@@ -268,3 +271,41 @@ class TwoStateModel(TwoStateCell, Mutation):
             ribosome_sensitive=ribosome_sensitive,
             **kwargs
         )
+
+    def add_feedback(self, eta0, eta1, eta2, perturbed=False):
+        """
+        Add feedback at the gene, transcript, and protein levels.
+
+        Args:
+
+            eta0 (float) - transcriptional feedback strength
+
+            eta1 (float) - post-transcriptional feedback strength
+
+            eta2 (float) - post-translational feedback strength
+
+            perturbed (bool) - if True, feedback is sensitive to perturbation
+
+        """
+        self.add_transcriptional_feedback(k=eta0, perturbed=perturbed)
+        self.add_post_transcriptional_feedback(k=eta1, perturbed=perturbed)
+        self.add_post_translational_feedback(k=eta2, perturbed=perturbed)
+
+    def add_promoters(self, eta0, eta1, eta2, perturbed=False):
+        """
+        Add a promoter at the gene, transcript, and protein levels.
+
+        Args:
+
+            eta0 (float) - activation strength
+
+            eta1 (float) - transcriptional promoter strength
+
+            eta2 (float) - translational promoter strength
+
+            perturbed (bool) - if True, promoters are sensitive to perturbation
+
+        """
+        self.add_activation(k=eta0, perturbed=perturbed)
+        self.add_transcriptional_promoter(k=eta1, perturbed=perturbed)
+        self.add_translational_promoter(k=eta2, perturbed=perturbed)

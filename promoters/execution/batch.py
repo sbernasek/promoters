@@ -194,7 +194,7 @@ class Batch:
         job_script.write('while IFS=$\'\\t\' read P\n')
         job_script.write('do\n')
         job_script.write('b_id=$(echo $(basename ${P}) | cut -f 1 -d \'.\')\n')
-        job_script.write('   JOB=`sbatch - << EOJ\n\n')
+        job_script.write('   JOB=`sbatch << EOJ\n')
 
         # =========== begin submission script for individual batch ============
         job_script.write('#! /bin/bash\n')
@@ -210,8 +210,8 @@ class Batch:
         job_script.write('#SBATCH --mem=1gb \n\n')
 
         # load python module and metabolism virtual environment
-        job_script.write('module load python/anaconda3.6\n')
-        job_script.write('source activate ~/pythonenvs/promoters_env\n\n')
+        job_script.write('module load python/anaconda3\n')
+        job_script.write('source activate promoters_env\n\n')
 
         # move to batch directory
         job_script.write('cd {:s} \n\n'.format(path))

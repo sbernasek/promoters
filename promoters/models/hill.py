@@ -34,7 +34,7 @@ class HillModel(HillCell, Mutation):
 
     """
 
-    def __init__(self, name='X', k1=1, k_m=1, n=1, k2=1, g1=1, g2=1):
+    def __init__(self, name='X', k1=1, k_m=1, n=1, k2=1, g1=1, g2=1, include_activation=False):
         """
         Instantiate the Hill model.
 
@@ -54,6 +54,8 @@ class HillModel(HillCell, Mutation):
 
             g2 (float) - protein decay rate constant
 
+            include_activation (bool) - indicates whether or not to include activation
+
         """
 
         self.name = name
@@ -63,7 +65,8 @@ class HillModel(HillCell, Mutation):
         super().__init__(genes=(self.name,), I=1, **gene_kw)
 
         # add transcriptional activation by input
-        self.add_transcription(self.name, ('IN',), k=k1, k_m=k_m, n=n)
+        if include_activation:
+            self.add_transcription(self.name, ('IN',), k=k1, k_m=k_m, n=n)
 
     def add_transcriptional_feedback(self, k_m=1, n=1, **kwargs):
         """
