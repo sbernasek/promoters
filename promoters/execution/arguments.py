@@ -104,7 +104,7 @@ class PulseArguments(RunArguments):
                '-ps', '--pulse_start',
                help='Pulse start time.',
                type=float,
-               default=100.,
+               default=50.,
                required=False)
 
           # add keyword argument for pulse duration
@@ -144,7 +144,7 @@ class PulseArguments(RunArguments):
                '-sd', '--simulation_duration',
                help='Simulation duration.',
                type=float,
-               default=1000.,
+               default=250.,
                required=False)
 
 
@@ -167,7 +167,7 @@ class SweepArguments(PulseArguments):
           self.add_argument('-n', '--number_of_samples',
                               help='Number of parameter samples.',
                               type=int,
-                              default=2500,
+                              default=1000,
                               required=False)
 
           # add keyword argument for batch size
@@ -188,5 +188,5 @@ class SweepArguments(PulseArguments):
           self.add_argument('-A', '--allocation',
                               help='Project allocation.',
                               type=str,
-                              default='b1022',
+                              default='p30653',
                               required=False)
