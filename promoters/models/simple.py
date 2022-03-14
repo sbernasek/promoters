@@ -39,7 +39,8 @@ class SimpleModel(SimpleCell, Mutation):
                  k=1,
                  g=1,
                  lambda_g=0,
-                 lambda_k=0):
+                 lambda_k=0,
+                 include_activation=False):
         """
         Instantiate a simple model of a single protein.
 
@@ -55,6 +56,8 @@ class SimpleModel(SimpleCell, Mutation):
 
             lambda_k (float) - synthesis growth rate dependence
 
+            include_activation (bool) - indicates whether or not to include activation
+
         """
 
         self.name = name
@@ -64,10 +67,11 @@ class SimpleModel(SimpleCell, Mutation):
         super().__init__(genes=(self.name,), I=1, **gene_kw)
 
         # add synthesis driven by input
-        self.add_activation(protein=self.name,
-                            activator='IN',
-                            k=k,
-                            growth_dependence=lambda_k)
+        if include_activation:
+            self.add_activation(protein=self.name,
+                                activator='IN',
+                                k=k,
+                                growth_dependence=lambda_k)
 
     def add_post_translational_feedback(self,
             k=None,
