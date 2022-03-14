@@ -172,3 +172,102 @@ class HillModel(HillCell, Mutation):
         self.add_post_transcriptional_feedback(k=eta1, perturbed=perturbed)
         self.add_post_translational_feedback(k=eta2, perturbed=perturbed)
 
+    def add_transcriptional_promoter(self,
+            k,
+            k_m,
+            n,
+            baseline=0.,
+            atp_sensitive=True,
+            carbon_sensitive=True,
+            ribosome_sensitive=False,
+            **kwargs
+        ):
+        """
+        Adds a transcriptional promoter.
+
+        Args:
+
+            k (float) - maximum transcription rate
+
+            k_m (float) - michaelis menten constant
+
+            n (float) - hill coefficients
+
+            baseline (float) - baseline transcription rate
+
+            atp_sensitive (int) - order of metabolism dependence
+
+            carbon_sensitive (int) - order of carbon availability dependence
+
+            ribosome_sensitive (int) - order of ribosome dependence
+
+            kwargs: keyword arguments for reaction
+
+        """
+        self.add_transcription(
+            self.name, 
+            ('IN',), 
+            k=k, 
+            k_m=k_m, 
+            n=n,
+            baseline=baseline,
+            atp_sensitive=atp_sensitive,
+            carbon_sensitive=carbon_sensitive,
+            ribosome_sensitive=ribosome_sensitive,
+            **kwargs
+        )
+
+    def add_translational_promoter(
+            self,
+            k=None,
+            atp_sensitive=True,
+            carbon_sensitive=True,
+            ribosome_sensitive=True,
+            **kwargs
+        ):
+        """
+        Adds linear promoter applied to transcript level.
+
+        Args:
+
+            k (float) - rate parameter (promoter strength)
+
+            atp_sensitive (int) - order of metabolism dependence
+
+            carbon_sensitive (int) - order of carbon availability dependence
+
+            ribosome_sensitive (int) - order of ribosome dependence
+
+            kwargs: keyword arguments for reaction
+
+        """
+        super().add_translational_promoter(
+            gene=self.name,
+            k=k,
+            atp_sensitive=atp_sensitive,
+            carbon_sensitive=carbon_sensitive,
+            ribosome_sensitive=ribosome_sensitive,
+            **kwargs
+        )
+
+    def add_promoters(self, k_1, k_m, n, k_2, baseline=0.0, perturbed=False):
+        """
+        Add transcriptional and translational promoters
+
+        Args:
+
+            k_1 (float) - transcriptional promoter strength
+
+            k_m (float) - promoter michaelis constant
+
+            n (float) - promoter hill coefficient
+
+            k_2 (float) - translational promoter strength
+
+            baseline (float) - baseline transcription rate
+
+            perturbed (bool) - if True, feedback is sensitive to perturbation
+
+        """
+        self.add_transcriptional_promoter(k=k_1, k_m=k_m, n=n, baseline=baseline, perturbed=perturbed)
+        self.add_translational_promoter(k=k_2, perturbed=perturbed)

@@ -2,13 +2,13 @@ from distutils.core import setup
 from setuptools import find_packages
 
 setup(
-    name='gram',
-    version='1.0',
+    name='promoters',
+    version='0.1.0',
     author='Sebastian Bernasek',
     author_email='sebastian@u.northwestern.com',
     packages=find_packages(exclude=('tests',)),
     scripts=[],
-    url='https://github.com/sebastianbernasek/gram',
+    url='https://github.com/sebastianbernasek/promoters',
     license='MIT',
     description='Package for simulating pulse response under gene regulatory and metabolic perturbations.',
     long_description=open('README.md').read(),

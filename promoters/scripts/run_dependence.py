@@ -1,17 +1,19 @@
 from time import time
-from gram.simulation.environment import ConditionSimulation
-from gram.execution.arguments import RunArguments
+from promoters.simulation.environment import ConditionSimulation
+from promoters.execution.arguments import RunArguments
 
 
 # ======================== PARSE SCRIPT ARGUMENTS =============================
 
 args = RunArguments(description='Simulation arguments.')
-skwargs = dict(N=args['number_of_trajectories'], debug=args['debug'])
+skwargs = dict(N=args['number_of_trajectories'],
+               debug=args['debug'],
+               conditions=['normal', 'half_growth'])
+
 ckwargs = dict(horizon=args['horizon'],
                deviations=args['use_deviations'],
                mode=args['comparison_mode'])
 
-saveall = args['save_all']
 
 # ============================= RUN SCRIPT ====================================
 
@@ -30,7 +32,7 @@ with open(args['path'], 'r') as batch_file:
           simulation.run(skwargs=skwargs, ckwargs=ckwargs)
 
           # save simulation
-          simulation.save(path.strip(), saveall=saveall)
+          simulation.save(path.strip(), saveall=args['save_all'])
 
 # print runtime to standard out
 runtime = time() - start_time

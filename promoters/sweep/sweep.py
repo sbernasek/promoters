@@ -278,7 +278,7 @@ class SimpleSweep(Sweep):
 
         0: synthesis rate constant
         1: decay rate constant
-        2: feedback strength
+        2: auxiliary promoter strength
 
     """
 
@@ -298,7 +298,7 @@ class SimpleSweep(Sweep):
 
         # define parameter ranges, log10(val)
         if base is None:
-            base = np.array([0, -3, -3])
+            base = np.array([0, -3, 0])
 
         # define parameter labels
         labels = ('k', '\gamma', '\eta')
@@ -327,8 +327,9 @@ class SimpleSweep(Sweep):
         # instantiate base model
         model = SimpleModel(k=k, g=g)
 
-        # add feedback (two equivalent sets)
-        model.add_feedback(eta, perturbed=True)
+        # add promoters (two equivalent sets)
+        model.add_promoters(eta, perturbed=False)
+        model.add_promoters(eta, perturbed=True)
 
         return model
 
@@ -344,9 +345,9 @@ class LinearSweep(Sweep):
         3: deactivation rate constant
         4: mrna degradation rate constant
         5: protein degradation rate constant
-        6: transcriptional feedback strength
-        7: post-transcriptional feedback strength
-        8: post-translational feedback strength
+        6: activation promoter strength
+        7: transcriptional promoter strength
+        8: translational promoter strength
 
     """
 
@@ -366,7 +367,7 @@ class LinearSweep(Sweep):
 
         # define parameter ranges, log10(val)
         if base is None:
-            base = np.array([0, 0, 0, 0, -2, -3, -4, -4, -4])
+            base = np.array([0, 0, 0, 0, -2, -3, 0, 0, 0])
 
         # define parameter labels
         labels = ('k_0', 'k_1', 'k_2',
@@ -397,9 +398,9 @@ class LinearSweep(Sweep):
         # instantiate base model
         model = LinearModel(k0=k0, k1=k1, k2=k2, g0=g0, g1=g1, g2=g2)
 
-        # add feedback (two equivalent sets)
-        model.add_feedback(eta0, eta1, eta2, perturbed=False)
-        model.add_feedback(eta0, eta1, eta2, perturbed=True)
+        # add promoters (two equivalent sets)
+        model.add_promoters(eta0, eta1, eta2, perturbed=False)
+        model.add_promoters(eta0, eta1, eta2, perturbed=True)
 
         return model
 
@@ -413,11 +414,11 @@ class HillSweep(Sweep):
         1: transcription rate constant
         2: translation rate constant
         3: mrna degradation rate constant
-        4: protein degradation rate constant
-        5: repressor michaelis constant
-        6: repressor hill coefficient
-        7: post-transcriptional feedback strength
-        8: post-translational feedback strength
+        4: protein degradation rate constant        
+        5: transcriptional promoter strength
+        6: promoter michaelis constant
+        7: promoter hill coefficient
+        8: translational promoter strength
 
     """
 
@@ -437,13 +438,13 @@ class HillSweep(Sweep):
 
         # define parameter ranges, log10(val)
         if base is None:
-            base = np.array([0, 0, 0, -2, -3, 4, 0, -5, -4])
+            base = np.array([0, 0, 0, -2, -3, 0, 0, 0, 0])
 
         # define parameter labels
         labels = ('H', 'k_R', 'k_P',
                   '\gamma_R', '\gamma_P',
-                  'K_r', 'H_r',
-                  '\eta_R', '\eta_P')
+                  'k_R', 'K_r',
+                  'H_r', 'k_P')
 
         # call parent instantiation
         super().__init__(base, delta, num_samples, labels=labels)
@@ -464,14 +465,14 @@ class HillSweep(Sweep):
         """
 
         # extract parameters
-        n, k1, k2, g1, g2, k_m, r_n, eta1, eta2 = parameters
+        n, k1, k2, g1, g2, eta1, etaK, etan, eta2 = parameters
 
         # instantiate base model
         model = HillModel(k1=k1, k_m=.5, n=n, k2=k2, g1=g1, g2=g2)
 
-        # add feedback (two equivalent sets)
-        model.add_feedback(k_m, r_n, eta1, eta2, perturbed=False)
-        model.add_feedback(k_m, r_n, eta1, eta2, perturbed=True)
+        # add promoters (two equivalent sets)
+        model.add_promoters(eta1, etaK, etan, eta2, perturbed=False)
+        model.add_promoters(eta1, etaK, etan, eta2, perturbed=True)
 
         return model
 
@@ -487,9 +488,9 @@ class TwoStateSweep(Sweep):
         3: deactivation rate constant
         4: mrna degradation rate constant
         5: protein degradation rate constant
-        6: transcriptional feedback strength
-        7: post-transcriptional feedback strength
-        8: post-translational feedback strength
+        6: activation promoter strength
+        7: transcriptional promoter strength
+        8: translational promoter strength
 
     """
 
@@ -509,7 +510,7 @@ class TwoStateSweep(Sweep):
 
         # define parameter ranges, log10(val)
         if base is None:
-            base = np.array([0, 0, 0, -1, -2, -3, -4, -4.5, -4])
+            base = np.array([0, 0, 0, -1, -2, -3, 0, 0, 0])
 
         # define parameter labels
         labels = ('k_G', 'k_R', 'k_P',
@@ -540,8 +541,8 @@ class TwoStateSweep(Sweep):
         # instantiate base model
         model = TwoStateModel(k0=k0, k1=k1, k2=k2, g0=g0, g1=g1, g2=g2)
 
-        # add feedback (two equivalent sets)
-        model.add_feedback(eta0, eta1, eta2, perturbed=False)
-        model.add_feedback(eta0, eta1, eta2, perturbed=True)
+        # add promoters (two equivalent sets)
+        model.add_promoters(eta0, eta1, eta2, perturbed=False)
+        model.add_promoters(eta0, eta1, eta2, perturbed=True)
 
         return model

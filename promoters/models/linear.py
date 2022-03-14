@@ -65,14 +65,15 @@ class LinearModel(LinearCell, Mutation):
         super().__init__(genes=(self.name,), I=1, **gene_kw)
 
         # add transcriptional activation by input
-        self.add_activation(gene=self.name, activator='IN', k=k0)
+        self.add_activation(activator='IN', k=k0)
 
     def add_transcriptional_feedback(self,
-                                     k=None,
-                                     atp_sensitive=2,
-                                     carbon_sensitive=2,
-                                     ribosome_sensitive=1,
-                                     **kwargs):
+            k=None,
+            atp_sensitive=2,
+            carbon_sensitive=2,
+            ribosome_sensitive=1,
+            **kwargs
+        ):
         """
         Adds linear negative feedback applied to activated-DNA level.
 
@@ -98,7 +99,8 @@ class LinearModel(LinearCell, Mutation):
              atp_sensitive=atp_sensitive,
              carbon_sensitive=carbon_sensitive,
              ribosome_sensitive=ribosome_sensitive,
-             **kwargs)
+             **kwargs
+        )
 
     def add_post_transcriptional_feedback(self,
                                      k=None,
@@ -134,11 +136,12 @@ class LinearModel(LinearCell, Mutation):
              **kwargs)
 
     def add_post_translational_feedback(self,
-                                     k=None,
-                                     atp_sensitive=2,
-                                     carbon_sensitive=2,
-                                     ribosome_sensitive=1,
-                                     **kwargs):
+        k=None,
+        atp_sensitive=2,
+        carbon_sensitive=2,
+        ribosome_sensitive=1,
+        **kwargs
+        ):
         """
         Adds linear negative feedback applied to protein level.
 
@@ -165,3 +168,102 @@ class LinearModel(LinearCell, Mutation):
              carbon_sensitive=carbon_sensitive,
              ribosome_sensitive=ribosome_sensitive,
              **kwargs)
+
+    def add_activation(self,
+            activator='IN',
+            k=None,
+            atp_sensitive=False,
+            carbon_sensitive=False,
+            ribosome_sensitive=False,
+            **kwargs
+        ):
+        """
+        Adds linear promoter applied to activated-DNA level.
+
+        Args:
+
+            k (float) - rate parameter (promoter strength)
+
+            atp_sensitive (int) - order of metabolism dependence
+
+            carbon_sensitive (int) - order of carbon availability dependence
+
+            ribosome_sensitive (int) - order of ribosome dependence
+
+            kwargs: keyword arguments for reaction
+
+        """
+        super().add_activation(
+            gene=self.name, 
+            activator=activator, 
+            k=k,
+            atp_sensitive=atp_sensitive,
+            carbon_sensitive=carbon_sensitive,
+            ribosome_sensitive=ribosome_sensitive,
+            **kwargs,
+        )
+
+    def add_transcriptional_promoter(self,
+            k=None,
+            atp_sensitive=True,
+            carbon_sensitive=True,
+            ribosome_sensitive=False,
+            **kwargs
+        ):
+        """
+        Adds linear transcriptional promoter.
+
+        Args:
+
+            k (float) - rate parameter (promoter strength)
+
+            atp_sensitive (int) - order of metabolism dependence
+
+            carbon_sensitive (int) - order of carbon availability dependence
+
+            ribosome_sensitive (int) - order of ribosome dependence
+
+            kwargs: keyword arguments for reaction
+
+        """
+        super().add_transcriptional_promoter(
+            gene=self.name, 
+            k=k,
+            atp_sensitive=atp_sensitive,
+            carbon_sensitive=carbon_sensitive,
+            ribosome_sensitive=ribosome_sensitive,
+            **kwargs,
+        )
+
+    def add_translational_promoter(
+            self,
+            k=None,
+            atp_sensitive=True,
+            carbon_sensitive=True,
+            ribosome_sensitive=True,
+            **kwargs
+        ):
+        """
+        Adds linear translational promoter.
+
+        Args:
+
+            k (float) - rate parameter (promoter strength)
+
+            atp_sensitive (int) - order of metabolism dependence
+
+            carbon_sensitive (int) - order of carbon availability dependence
+
+            ribosome_sensitive (int) - order of ribosome dependence
+
+            kwargs: keyword arguments for reaction
+
+        """
+        super().add_translational_promoter(
+            gene=self.name,
+            k=k,
+            atp_sensitive=atp_sensitive,
+            carbon_sensitive=carbon_sensitive,
+            ribosome_sensitive=ribosome_sensitive,
+            **kwargs
+        )

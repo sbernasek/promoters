@@ -1,15 +1,15 @@
 import numpy as np
 import pickle
-from gram.models.linear import LinearModel
-from gram.simulation.environment import ConditionSimulation
+from promoters.models.linear import LinearModel
+from promoters.simulation.environment import ConditionSimulation
 
 
 N = 5000
 
-conditions = ('normal', 'diabetic', 'minute', 'carbon_limited')
+conditions = ('normal', 'diabetic', 'minute', 'carbon_limited', 'hypermetabolic')
 
-# define feedback strengths
-eta = (5e-4, 1e-4, 5e-4)
+# define promoter strengths
+eta = (1,1,1)
 
 # run pairwise simulations
 simulations = {}
@@ -24,8 +24,8 @@ for i in range(3):
 
         # define model
         model = LinearModel(g1=0.01, g2=0.001)
-        model.add_feedback(*permanent)
-        model.add_feedback(*removed, perturbed=True)
+        model.add_promoters(*permanent)
+        model.add_promoters(*removed, perturbed=True)
 
         # run simulation
         sim = ConditionSimulation(model)
