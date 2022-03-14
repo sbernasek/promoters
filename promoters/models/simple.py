@@ -94,7 +94,6 @@ class SimpleModel(SimpleCell, Mutation):
             kwargs: keyword arguments for reaction
 
         """
-
         self.add_linear_feedback(
              sensor=self.name,
              target=self.name,
@@ -122,4 +121,26 @@ class SimpleModel(SimpleCell, Mutation):
         self.add_post_translational_feedback(
             k=eta,
             perturbed=perturbed,
-            growth_dependence=lambda_eta)
+            growth_dependence=lambda_eta,
+        )
+
+    def add_promoters(self, eta, perturbed=False, lambda_eta=0):
+        """
+        Add promoter.
+
+        Args:
+
+            eta (float) - promoter strength
+
+            perturbed (bool) - if True, promoter is sensitive to perturbation
+
+            lambda_eta (float) - promoter growth rate dependence
+
+        """
+        self.add_activation(
+            protein=self.name,
+            activator='IN',
+            k=eta,
+            perturbed=perturbed,
+            growth_dependence=lambda_eta
+        )

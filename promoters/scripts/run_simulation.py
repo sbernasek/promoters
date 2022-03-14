@@ -1,6 +1,6 @@
 from time import time
-from gram.simulation.environment import ConditionSimulation
-from gram.execution.arguments import RunArguments
+from promoters.simulation.environment import ConditionSimulation
+from promoters.execution.arguments import RunArguments
 
 
 # ======================== PARSE SCRIPT ARGUMENTS =============================

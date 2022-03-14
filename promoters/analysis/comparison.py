@@ -275,7 +275,7 @@ class ComparisonVis:
         # format axis
         self.format_axis(ax)
 
-    def plot_outlying_trajectories(self, ax=None, show_threshold=False):
+    def plot_outlying_trajectories(self, ax=None, show_threshold=False, **kw):
         """
         Visualize comparison by plotting the trajectories that lie below or above the reference trajectories.
 
@@ -353,19 +353,19 @@ class ComparisonVis:
         max_error = self.compared.upper[self.dim][self.comparison_index]
 
         # add vertical arrow defining threshold value
-        ax.annotate(s='',
+        ax.annotate(text='',
                     xy=(peak_time, self.threshold),
                     xytext=(peak_time, peak_value),
                     arrowprops=dict(arrowstyle='<->', shrinkA=0, shrinkB=0))
 
         # add horizontal arrow defining commitment time
-        ax.annotate(s='',
+        ax.annotate(text='',
                     xy=(peak_time, self.threshold),
                     xytext=(comparison_time, self.threshold),
                     arrowprops=dict(arrowstyle='<->', shrinkA=0, shrinkB=0))
 
         # add vertical arrow defining error
-        ax.annotate(s='',
+        ax.annotate(text='',
                     xy=(1+comparison_time, self.threshold),
                     xytext=(1+comparison_time, max_error),
                     arrowprops=dict(arrowstyle='<->', shrinkA=0, shrinkB=0, color='k'))
@@ -392,7 +392,7 @@ class ComparisonVis:
         # display comparison metrics
         #self.display_metrics(ax)
 
-    def display_metrics(self, ax, **kwargs):
+    def display_metrics(self, ax, fontsize=8):
         """
         Display comparison metrics on axes.
 
@@ -405,7 +405,7 @@ class ComparisonVis:
         x = ax.get_xlim()[1] - 0.05*ax.get_xticks().ptp()
         y = ax.get_ylim()[1] - 0.05*ax.get_yticks().ptp()
 
-        kw = dict(ha='right', va='top', fontsize=8)
+        kw = dict(ha='right', va='top', fontsize=fontsize)
         ax.text(x, y, '{:0.1%} error'.format(self.error), **kw)
         ax.text(x, y, '\n{:0.1%} above'.format(self.above), color='r', **kw)
         ax.text(x, y, '\n\n{:0.1%} below'.format(self.below), color='b', **kw)
@@ -1043,7 +1043,7 @@ class MultiComparison(Comparison):
         # format axis
         self.format_axis(ax)
 
-    def display_metrics(self, ax, threshold_index=-1):
+    def display_metrics(self, ax, threshold_index=-1, fontsize=8):
         """
         Display comparison metrics on axes.
 
@@ -1058,7 +1058,7 @@ class MultiComparison(Comparison):
         x = ax.get_xlim()[1] - 0.05*ax.get_xticks().ptp()
         y = ax.get_ylim()[1] - 0.05*ax.get_yticks().ptp()
 
-        kw = dict(ha='right', va='top', fontsize=8)
+        kw = dict(ha='right', va='top', fontsize=fontsize)
         ax.text(x, y, '{:0.1%} error'.format(self.error[threshold_index]), **kw)
         ax.text(x, y, '\n{:0.1%} above'.format(self.above[threshold_index]), color='r', **kw)
         ax.text(x, y, '\n\n{:0.1%} below'.format(self.below[threshold_index]), color='b', **kw)

@@ -4,7 +4,7 @@ from .mutation import Mutation
 
 class TwoStateModel(TwoStateCell, Mutation):
     """
-    Class defines a cell with a single protein coding gene subject to negative feedback. Transcription is based on a two-state model.
+    Class defines a cell with a single protein coding gene. Transcription is based on a two-state model.
 
     Attributes:
 
@@ -67,14 +67,15 @@ class TwoStateModel(TwoStateCell, Mutation):
         super().__init__(genes=(self.name,), I=1, **gene_kw)
 
         # add transcriptional activation by input
-        self.add_activation(gene=self.name, activator='IN', k=k0)
+        self.add_activation(activator='IN', k=k0)
 
     def add_transcriptional_feedback(self,
-                                     k=None,
-                                     atp_sensitive=2,
-                                     carbon_sensitive=2,
-                                     ribosome_sensitive=1,
-                                     **kwargs):
+            k=None,
+            atp_sensitive=2,
+            carbon_sensitive=2,
+            ribosome_sensitive=1,
+            **kwargs
+        ):
         """
         Adds transcriptional auto-repression.
 
@@ -102,11 +103,12 @@ class TwoStateModel(TwoStateCell, Mutation):
              **kwargs)
 
     def add_post_transcriptional_feedback(self,
-                                     k=None,
-                                     atp_sensitive=2,
-                                     carbon_sensitive=2,
-                                     ribosome_sensitive=1,
-                                     **kwargs):
+            k=None,
+            atp_sensitive=2,
+            carbon_sensitive=2,
+            ribosome_sensitive=1,
+            **kwargs
+        ):
         """
         Adds linear negative feedback applied to transcript level.
 
@@ -135,11 +137,12 @@ class TwoStateModel(TwoStateCell, Mutation):
              **kwargs)
 
     def add_post_translational_feedback(self,
-                                     k=None,
-                                     atp_sensitive=2,
-                                     carbon_sensitive=2,
-                                     ribosome_sensitive=1,
-                                     **kwargs):
+            k=None,
+            atp_sensitive=2,
+            carbon_sensitive=2,
+            ribosome_sensitive=1,
+            **kwargs
+        ):
         """
         Adds linear negative feedback applied to protein level.
 
@@ -166,3 +169,102 @@ class TwoStateModel(TwoStateCell, Mutation):
              carbon_sensitive=carbon_sensitive,
              ribosome_sensitive=ribosome_sensitive,
              **kwargs)
+
+    def add_activation(self,
+            activator='IN',
+            k=None,
+            atp_sensitive=False,
+            carbon_sensitive=False,
+            ribosome_sensitive=False,
+            **kwargs
+        ):
+        """
+        Adds linear promoter applied to activated-DNA level.
+
+        Args:
+
+            k (float) - rate parameter (promoter strength)
+
+            atp_sensitive (int) - order of metabolism dependence
+
+            carbon_sensitive (int) - order of carbon availability dependence
+
+            ribosome_sensitive (int) - order of ribosome dependence
+
+            kwargs: keyword arguments for reaction
+
+        """
+        super().add_activation(
+            gene=self.name, 
+            activator=activator, 
+            k=k,
+            atp_sensitive=atp_sensitive,
+            carbon_sensitive=carbon_sensitive,
+            ribosome_sensitive=ribosome_sensitive,
+            **kwargs,
+        )
+
+    def add_transcriptional_promoter(self,
+            k=None,
+            atp_sensitive=True,
+            carbon_sensitive=True,
+            ribosome_sensitive=False,
+            **kwargs
+        ):
+        """
+        Adds linear transcriptional promoter.
+
+        Args:
+
+            k (float) - rate parameter (promoter strength)
+
+            atp_sensitive (int) - order of metabolism dependence
+
+            carbon_sensitive (int) - order of carbon availability dependence
+
+            ribosome_sensitive (int) - order of ribosome dependence
+
+            kwargs: keyword arguments for reaction
+
+        """
+        super().add_transcriptional_promoter(
+            gene=self.name, 
+            k=k,
+            atp_sensitive=atp_sensitive,
+            carbon_sensitive=carbon_sensitive,
+            ribosome_sensitive=ribosome_sensitive,
+            **kwargs,
+        )
+
+    def add_translational_promoter(
+            self,
+            k=None,
+            atp_sensitive=True,
+            carbon_sensitive=True,
+            ribosome_sensitive=True,
+            **kwargs
+        ):
+        """
+        Adds linear translational promoter.
+
+        Args:
+
+            k (float) - rate parameter (promoter strength)
+
+            atp_sensitive (int) - order of metabolism dependence
+
+            carbon_sensitive (int) - order of carbon availability dependence
+
+            ribosome_sensitive (int) - order of ribosome dependence
+
+            kwargs: keyword arguments for reaction
+
+        """
+        super().add_translational_promoter(
+            gene=self.name,
+            k=k,
+            atp_sensitive=atp_sensitive,
+            carbon_sensitive=carbon_sensitive,
+            ribosome_sensitive=ribosome_sensitive,
+            **kwargs
+        )

@@ -83,7 +83,7 @@ class RunArguments(ArgumentParser):
                '-cm', '--comparison_mode',
                help='Comparison mode.',
                type=str,
-               default='empirical',
+               default='promoters',
                required=False)
 
      def parse(self):
@@ -188,5 +188,5 @@ class SweepArguments(PulseArguments):
           self.add_argument('-A', '--allocation',
                               help='Project allocation.',
                               type=str,
-                              default='p30653',
+                              default='b1022',
                               required=False)

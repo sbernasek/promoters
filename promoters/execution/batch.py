@@ -140,7 +140,7 @@ class Batch:
                                 num_trajectories=5000,
                                 saveall=False,
                                 deviations=False,
-                                comparison='empirical',
+                                comparison='promoters',
                                 walltime=10,
                                 allocation='p30653'):
         """
@@ -194,24 +194,24 @@ class Batch:
         job_script.write('while IFS=$\'\\t\' read P\n')
         job_script.write('do\n')
         job_script.write('b_id=$(echo $(basename ${P}) | cut -f 1 -d \'.\')\n')
-        job_script.write('   JOB=`msub - << EOJ\n\n')
+        job_script.write('   JOB=`sbatch - << EOJ\n\n')
 
         # =========== begin submission script for individual batch ============
         job_script.write('#! /bin/bash\n')
-        job_script.write('#MSUB -A {:s} \n'.format(allocation))
-        job_script.write('#MSUB -q {:s} \n'.format(queue))
-        job_script.write('#MSUB -l walltime={0:02d}:00:00 \n'.format(walltime))
-        job_script.write('#MSUB -m abe \n')
-        #job_script.write('#MSUB -M sebastian@u.northwestern.edu \n')
-        job_script.write('#MSUB -o ./log/${b_id}/outlog \n')
-        job_script.write('#MSUB -e ./log/${b_id}/errlog \n')
-        job_script.write('#MSUB -N ${b_id} \n')
-        job_script.write('#MSUB -l nodes=1:ppn=1 \n')
-        job_script.write('#MSUB -l mem=1gb \n\n')
+        job_script.write('#SBATCH -A {:s} \n'.format(allocation))
+        job_script.write('#SBATCH --partition {:s} \n'.format(queue))
+        job_script.write('#SBATCH --time={0:02d}:00:00 \n'.format(walltime))
+        job_script.write('#SBATCH --mail-type abe \n')
+        ##job_script.write('#SBATCH -M sebastian@u.northwestern.edu \n')
+        job_script.write('#SBATCH --output ./log/${b_id}/outlog \n')
+        job_script.write('#SBATCH --error ./log/${b_id}/errlog \n')
+        job_script.write('#SBATCH -J ${b_id} \n')
+        job_script.write('#SBATCH --nodes=1:ppn=1 \n')
+        job_script.write('#SBATCH --mem=1gb \n\n')
 
         # load python module and metabolism virtual environment
         job_script.write('module load python/anaconda3.6\n')
-        job_script.write('source activate ~/pythonenvs/metabolism_env\n\n')
+        job_script.write('source activate ~/pythonenvs/promoters_env\n\n')
 
         # move to batch directory
         job_script.write('cd {:s} \n\n'.format(path))
@@ -317,7 +317,7 @@ class Batch:
               deviations=False,
               comparison='empirical',
               walltime=10,
-              allocation='p30653',
+              allocation='b1022',
               **sim_kw):
         """
         Build directory tree for a batch of jobs. Instantiates and saves a simulation instance for each parameter set, then generates a single shell script to submit each simulation as a separate job.

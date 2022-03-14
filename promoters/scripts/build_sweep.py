@@ -1,7 +1,7 @@
-from gram.execution.arguments import SweepArguments
-from gram.sweep.sweep import LinearSweep, HillSweep, TwoStateSweep, SimpleSweep
-from gram.sweep.dense import SimpleDense2D, SimpleDependenceSweep
-from gram.sweep.influence import RepressorInfluenceSweep, PromoterInfluenceSweep
+from promoters.execution.arguments import SweepArguments
+from promoters.sweep.sweep import LinearSweep, HillSweep, TwoStateSweep, SimpleSweep
+from promoters.sweep.dense import SimpleDense2D, SimpleDependenceSweep
+from promoters.sweep.influence import RepressorInfluenceSweep, PromoterInfluenceSweep
 
 
 # ======================== PARSE SCRIPT ARGUMENTS =============================

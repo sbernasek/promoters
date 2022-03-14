@@ -48,3 +48,22 @@ class Mutation:
         self.add_transcriptional_feedback(k=eta0, perturbed=perturbed)
         self.add_post_transcriptional_feedback(k=eta1, perturbed=perturbed)
         self.add_post_translational_feedback(k=eta2, perturbed=perturbed)
+
+    def add_promoters(self, eta0, eta1, eta2, perturbed=False):
+        """
+        Add a promoter at the gene, transcript, and protein levels.
+
+        Args:
+
+            eta0 (float) - activation strength
+
+            eta1 (float) - transcriptional promoter strength
+
+            eta2 (float) - translational promoter strength
+
+            perturbed (bool) - if True, promoters are sensitive to perturbation
+
+        """
+        self.add_activation(k=eta0, perturbed=perturbed)
+        self.add_transcriptional_promoter(k=eta1, perturbed=perturbed)
+        self.add_translational_promoter(k=eta2, perturbed=perturbed)

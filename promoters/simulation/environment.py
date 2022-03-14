@@ -100,11 +100,14 @@ class ConditionSimulation(PerturbationSimulation):
         self.complete = False
 
         # set condition names
-        self.condition_names = dict(normal='Normal',
-                                  diabetic='Reduced Metabolism',
-                                  carbon_limited='Carbon Limited',
-                                  minute='Reduced Translation',
-                                  half_growth='Halved Growth Rate')
+        self.condition_names = dict(
+            normal='Normal',
+            diabetic='Reduced Metabolism',
+            hyper_metabolic='Elevated Metabolism',
+            carbon_limited='Carbon Limited',
+            minute='Reduced Translation',
+            half_growth='Halved Growth Rate',
+        )
 
     def __getstate__(self):
         """ Returns all attributes except simulation trajectories. """
@@ -236,11 +239,12 @@ class ConditionSimulation(PerturbationSimulation):
         super().save(join(path, 'simulation.pkl'))
 
     def simulate(self,
-                 N=5000,
-                 conditions=None,
-                 seed=None,
-                 inplace=True,
-                 debug=False):
+            N=5000,
+            conditions=None,
+            seed=None,
+            inplace=True,
+            debug=False
+        ):
         """
         Run perturbation simulation for each environmental condition.
 
@@ -359,7 +363,7 @@ class ConditionSimulation(PerturbationSimulation):
         self.seed = seed
         self.complete = True
 
-    def plot_comparison(self, trajectories=False, axes=None, threshold=-1, size=1):
+    def plot_comparison(self, trajectories=False, axes=None, size=1, fontsize=8):
         """
         Visualize comparison for each environmental condition.
 
@@ -392,14 +396,11 @@ class ConditionSimulation(PerturbationSimulation):
 
         # display error metrics on plot
         for i, comparison in enumerate(self.comparisons.values()):
-            if threshold is not None:
-                comparison.display_metrics(axes[i], threshold_index=threshold)
+            comparison.display_metrics(axes[i], fontsize=fontsize)
 
         axes[0].set_ylabel('Protein level')
 
         plt.tight_layout()
-
-        return fig
 
     def plot_dynamics(self, dim=-1, trajectories=False, axes=None):
         """
