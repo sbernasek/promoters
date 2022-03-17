@@ -298,7 +298,7 @@ class SimpleSweep(Sweep):
 
         # define parameter ranges, log10(val)
         if base is None:
-            base = np.array([0, -3, 0])
+            base = np.array([0, -3, -1])
 
         # define parameter labels
         labels = ('k', '\gamma', '\eta')
@@ -367,7 +367,7 @@ class LinearSweep(Sweep):
 
         # define parameter ranges, log10(val)
         if base is None:
-            base = np.array([0, 0, 0, 0, -2, -3, 0, 0, 0])
+            base = np.array([0, 0, 0, 0, -2, -3, -1, -1, -1])
 
         # define parameter labels
         labels = ('k_0', 'k_1', 'k_2',
@@ -438,7 +438,7 @@ class HillSweep(Sweep):
 
         # define parameter ranges, log10(val)
         if base is None:
-            base = np.array([0, 0, 0, -2, -3, 0, 0, 0, 0])
+            base = np.array([0, 0, 0, -2, -3, -1, 3, 1, -1])
 
         # define parameter labels
         labels = ('H', 'k_R', 'k_P',
@@ -510,7 +510,7 @@ class TwoStateSweep(Sweep):
 
         # define parameter ranges, log10(val)
         if base is None:
-            base = np.array([0, 0, 0, -1, -2, -3, 0, 0, 0])
+            base = np.array([0, 0, 0, -1, -2, -3, -1, -1, -1])
 
         # define parameter labels
         labels = ('k_G', 'k_R', 'k_P',
