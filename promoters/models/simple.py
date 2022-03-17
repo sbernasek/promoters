@@ -40,7 +40,7 @@ class SimpleModel(SimpleCell, Mutation):
                  g=1,
                  lambda_g=0,
                  lambda_k=0,
-                 include_activation=False):
+                 include_activation=True):
         """
         Instantiate a simple model of a single protein.
 

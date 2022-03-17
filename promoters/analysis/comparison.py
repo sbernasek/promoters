@@ -233,12 +233,14 @@ class ComparisonVis:
             fig, ax = plt.subplots(figsize=(3, 2))
 
         # extract bounds for confidence bands
+        ti = 0
         tf = self.comparison_index + 1
 
-        t = self.t[:tf]
-        rbounds = (self.lower[:tf], self.upper[:tf])
-        cbounds = (self.compared.lower[self.dim][:tf],
-                   self.compared.upper[self.dim][:tf])
+        # extract bounds
+        t = self.t[ti:tf]
+        rbounds = (self.lower[ti:tf], self.upper[ti:tf])
+        cbounds = (self.compared.lower[self.dim][ti:tf],
+                   self.compared.upper[self.dim][ti:tf])
 
         # plot confidence band for reference
         ax.fill_between(t, *rbounds, color=reference_color, alpha=alpha)
@@ -292,9 +294,11 @@ class ComparisonVis:
             fig, ax = plt.subplots(figsize=(3, 2))
 
         # extract bounds for confidence bands
+        ti = 0
         tf = self.comparison_index + 1
-        lower, upper = self.lower[:tf], self.upper[:tf]
-        t = self.t[:tf]
+
+        lower, upper = self.lower[ti:tf], self.upper[ti:tf]
+        t = self.t[ti:tf]
 
         # plot confidence band for reference
         ax.fill_between(t, lower, upper, color='k', alpha=0.2)
@@ -303,7 +307,7 @@ class ComparisonVis:
 
         # assemble segments of trajectories below/above reference extrema
         segments_below, segments_within, segments_above = [], [], []
-        for x in self.compared.states[:, self.dim, :tf]:
+        for x in self.compared.states[:, self.dim, ti:tf]:
             below, above = x<lower, x>upper
 
             # select outlying line segments
@@ -544,9 +548,6 @@ class Comparison(ComparisonProperties, ComparisonMethods, ComparisonVis):
             above (float) - mean fraction of trajectories above the reference
 
         """
-
-        # determine start index (pulse onset)
-        #ind = self.reference.mean[self.dim].nonzero()[0][0] + 1
 
         t0 = 0
         tf = self.comparison_index

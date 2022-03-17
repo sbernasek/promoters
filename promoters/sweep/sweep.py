@@ -298,7 +298,7 @@ class SimpleSweep(Sweep):
 
         # define parameter ranges, log10(val)
         if base is None:
-            base = np.array([0, -3, 0])
+            base = np.array([0, -3, -1])
 
         # define parameter labels
         labels = ('k', '\gamma', '\eta')
@@ -367,12 +367,11 @@ class LinearSweep(Sweep):
 
         # define parameter ranges, log10(val)
         if base is None:
-            base = np.array([0, 0, 0, 0, -2, -3, 0, 0, 0])
+            base = np.array([0, 0, 0, 0, -2, -3])
 
         # define parameter labels
         labels = ('k_0', 'k_1', 'k_2',
-                  '\gamma_0', '\gamma_1', '\gamma_2',
-                  '\eta_0', '\eta_1', '\eta_2')
+                  '\gamma_0', '\gamma_1', '\gamma_2',)
 
         # call parent instantiation
         super().__init__(base, delta, num_samples, labels=labels)
@@ -393,14 +392,14 @@ class LinearSweep(Sweep):
         """
 
         # extract parameters
-        k0, k1, k2, g0, g1, g2, eta0, eta1, eta2 = parameters
+        k0, k1, k2, g0, g1, g2 = parameters
 
         # instantiate base model
-        model = LinearModel(k0=k0, k1=k1, k2=k2, g0=g0, g1=g1, g2=g2)
+        model = LinearModel(g0=g0, g1=g1, g2=g2, include_activation=False)
 
         # add promoters (two equivalent sets)
-        model.add_promoters(eta0, eta1, eta2, perturbed=False)
-        model.add_promoters(eta0, eta1, eta2, perturbed=True)
+        model.add_promoters(k0, k1, k2, perturbed=False)
+        model.add_promoters(k0, k1, k2, perturbed=True)
 
         return model
 
@@ -438,13 +437,11 @@ class HillSweep(Sweep):
 
         # define parameter ranges, log10(val)
         if base is None:
-            base = np.array([0, 0, 0, -2, -3, 0, 0, 0, 0])
+            base = np.array([0, 0, 0, -2, -3])
 
         # define parameter labels
         labels = ('H', 'k_R', 'k_P',
-                  '\gamma_R', '\gamma_P',
-                  'k_R', 'K_r',
-                  'H_r', 'k_P')
+                  '\gamma_R', '\gamma_P',)
 
         # call parent instantiation
         super().__init__(base, delta, num_samples, labels=labels)
@@ -465,14 +462,14 @@ class HillSweep(Sweep):
         """
 
         # extract parameters
-        n, k1, k2, g1, g2, eta1, etaK, etan, eta2 = parameters
+        n, k1, k2, g1, g2 = parameters
 
         # instantiate base model
-        model = HillModel(k1=k1, k_m=.5, n=n, k2=k2, g1=g1, g2=g2)
+        model = HillModel(g1=g1, g2=g2, include_activation=False)
 
         # add promoters (two equivalent sets)
-        model.add_promoters(eta1, etaK, etan, eta2, perturbed=False)
-        model.add_promoters(eta1, etaK, etan, eta2, perturbed=True)
+        model.add_promoters(k1, .5, n, k2, perturbed=False)
+        model.add_promoters(k1, .5, n, k2, perturbed=True)
 
         return model
 
@@ -510,12 +507,12 @@ class TwoStateSweep(Sweep):
 
         # define parameter ranges, log10(val)
         if base is None:
-            base = np.array([0, 0, 0, -1, -2, -3, 0, 0, 0])
+            base = np.array([0, 0, 0, -1, -2, -3])
 
         # define parameter labels
         labels = ('k_G', 'k_R', 'k_P',
                   '\gamma_G', '\gamma_R', '\gamma_P',
-                  '\eta_G', '\eta_R', '\eta_P')
+                  )
 
         # call parent instantiation
         super().__init__(base, delta, num_samples, labels=labels)
@@ -536,13 +533,13 @@ class TwoStateSweep(Sweep):
         """
 
         # extract parameters
-        k0, k1, k2, g0, g1, g2, eta0, eta1, eta2 = parameters
+        k0, k1, k2, g0, g1, g2 = parameters
 
         # instantiate base model
-        model = TwoStateModel(k0=k0, k1=k1, k2=k2, g0=g0, g1=g1, g2=g2)
+        model = TwoStateModel(g0=g0, g1=g1, g2=g2, include_activation=False)
 
         # add promoters (two equivalent sets)
-        model.add_promoters(eta0, eta1, eta2, perturbed=False)
-        model.add_promoters(eta0, eta1, eta2, perturbed=True)
+        model.add_promoters(k0, k1, k2, perturbed=False)
+        model.add_promoters(k0, k1, k2, perturbed=True)
 
         return model

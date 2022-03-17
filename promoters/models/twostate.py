@@ -38,7 +38,7 @@ class TwoStateModel(TwoStateCell, Mutation):
 
     """
 
-    def __init__(self, name='X', k0=1, k1=1, k2=1, g0=1, g1=1, g2=1, include_activation=False):
+    def __init__(self, name='X', k0=0.1, k1=1, k2=1, g0=1, g1=0.01, g2=0.001, include_activation=True):
         """
         Instantiate the two state model.
 
@@ -65,7 +65,7 @@ class TwoStateModel(TwoStateCell, Mutation):
         self.name = name
 
         # instantiate twostate cell with a single gene
-        gene_kw = dict(k0=0, k1=k1, k2=k2, g0=g0, g1=g1, g2=g2)
+        gene_kw = dict(k0=0, k1=k1, k2=k2, g0=g0, g1=g1, g2=g2, include_promoters=include_activation)
         super().__init__(genes=(self.name,), I=1, **gene_kw)
 
         # add transcriptional activation by input

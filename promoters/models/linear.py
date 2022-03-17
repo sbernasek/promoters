@@ -36,7 +36,7 @@ class LinearModel(LinearCell, Mutation):
 
     """
 
-    def __init__(self, name='X', k0=1, k1=1, k2=1, g0=1, g1=1, g2=1, include_activation=False):
+    def __init__(self, name='X', k0=1, k1=1, k2=1, g0=1, g1=0.01, g2=0.001, include_activation=True):
         """
         Instantiate the linear model.
 
@@ -63,7 +63,7 @@ class LinearModel(LinearCell, Mutation):
         self.name = name
 
         # instantiate linear cell with a single gene activated by the input
-        gene_kw = dict(k1=k1, k2=k2, g0=g0, g1=g1, g2=g2)
+        gene_kw = dict(k1=k1, k2=k2, g0=g0, g1=g1, g2=g2, include_promoters=include_activation)
         super().__init__(genes=(self.name,), I=1, **gene_kw)
 
         # add transcriptional activation by input
