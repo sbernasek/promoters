@@ -61,7 +61,7 @@ class HillModel(HillCell, Mutation):
         self.name = name
 
         # instantiate Hill cell with a single gene
-        gene_kw = dict(k=k2, g1=g1, g2=g2)
+        gene_kw = dict(k=k2, g1=g1, g2=g2, include_promoters=include_activation)
         super().__init__(genes=(self.name,), I=1, **gene_kw)
 
         # add transcriptional activation by input
