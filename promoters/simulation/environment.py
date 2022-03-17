@@ -187,11 +187,13 @@ class ConditionSimulation(PerturbationSimulation):
                 after = after.get_deviations(values='final')
 
             # crop timeseries
-            if simulation.horizon is not None:
-                start = simulation.pulse_start / simulation.timescale
+            start = simulation.pulse_start / simulation.timescale
+            if simulation.horizon is not None and simulation.horizon > 0.:                
                 stop = start + simulation.horizon
-                before = before.crop(start, stop)
-                after = after.crop(start, stop)
+            else:
+                stop = int(simulation.simulation_duration / simulation.timescale)
+            before = before.crop(start, stop)
+            after = after.crop(start, stop)
 
             # if comparison uses a different type, cast the timeseries
             if comparison.tstype != TimeSeries:
