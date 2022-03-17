@@ -34,7 +34,7 @@ class HillModel(HillCell, Mutation):
 
     """
 
-    def __init__(self, name='X', k1=1, k_m=1, n=1, k2=1, g1=1, g2=1, include_activation=False):
+    def __init__(self, name='X', k1=1, k_m=1, n=1, k2=1, g1=0.01, g2=0.001, include_activation=True):
         """
         Instantiate the Hill model.
 

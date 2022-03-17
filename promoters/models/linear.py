@@ -36,7 +36,7 @@ class LinearModel(LinearCell, Mutation):
 
     """
 
-    def __init__(self, name='X', k0=1, k1=1, k2=1, g0=1, g1=1, g2=1, include_activation=False):
+    def __init__(self, name='X', k0=1, k1=1, k2=1, g0=1, g1=0.01, g2=0.001, include_activation=True):
         """
         Instantiate the linear model.
 

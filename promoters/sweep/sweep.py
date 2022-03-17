@@ -367,7 +367,7 @@ class LinearSweep(Sweep):
 
         # define parameter ranges, log10(val)
         if base is None:
-            base = np.array([0, 0, 0, 0, -2, -3, -1, -1, -1])
+            base = np.array([0, 0, 0, 0, -2, -3, -.5, -.5, 0.])
 
         # define parameter labels
         labels = ('k_0', 'k_1', 'k_2',
