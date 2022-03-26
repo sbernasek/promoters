@@ -201,7 +201,6 @@ class Batch:
         job_script.write('#SBATCH -A {:s} \n'.format(allocation))
         job_script.write('#SBATCH --partition {:s} \n'.format(queue))
         job_script.write('#SBATCH --time={0:02d}:00:00 \n'.format(walltime))
-        job_script.write('#SBATCH --mail-type abe \n')
         ##job_script.write('#SBATCH -M sebastian@u.northwestern.edu \n')
         job_script.write('#SBATCH --output ./log/${b_id}/outlog \n')
         job_script.write('#SBATCH --error ./log/${b_id}/errlog \n')
