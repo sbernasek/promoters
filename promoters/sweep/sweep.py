@@ -438,7 +438,7 @@ class HillSweep(Sweep):
 
         # define parameter ranges, log10(val)
         if base is None:
-            base = np.array([0, 0, 0, -2, -3, , -1])
+            base = np.array([0, 0, 0, -2, -3, -1])
 
         # define parameter labels
         labels = ('H', 'k_R', 'k_P',
