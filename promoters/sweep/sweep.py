@@ -301,7 +301,7 @@ class SimpleSweep(Sweep):
             base = np.array([0, -3, -1])
 
         # define parameter labels
-        labels = ('k', '\gamma', '\eta')
+        labels = ('k', '\gamma', 'severity')
 
         # call parent instantiation
         super().__init__(base, delta, num_samples, labels=labels)
@@ -322,14 +322,14 @@ class SimpleSweep(Sweep):
         """
 
         # extract parameters
-        k, g, eta = parameters
+        k, g, perturbation_severity = parameters
 
         # instantiate base model
         model = SimpleModel(k=k, g=g)
 
         # add promoters (two equivalent sets)
-        model.add_promoters(eta, perturbed=False)
-        model.add_promoters(eta, perturbed=True)
+        model.add_promoters(k, perturbed=False)
+        model.add_promoters(k*perturbation_severity, perturbed=True)
 
         return model
 
@@ -367,11 +367,12 @@ class LinearSweep(Sweep):
 
         # define parameter ranges, log10(val)
         if base is None:
-            base = np.array([0, 0, 0, 0, -2, -3])
+            base = np.array([0, 0, 0, 0, -2, -3, -1])
 
         # define parameter labels
         labels = ('k_0', 'k_1', 'k_2',
-                  '\gamma_0', '\gamma_1', '\gamma_2',)
+                  '\gamma_0', '\gamma_1', '\gamma_2',
+                  'severity',)
 
         # call parent instantiation
         super().__init__(base, delta, num_samples, labels=labels)
@@ -392,14 +393,14 @@ class LinearSweep(Sweep):
         """
 
         # extract parameters
-        k0, k1, k2, g0, g1, g2 = parameters
+        k0, k1, k2, g0, g1, g2, perturbation_severity = parameters
 
         # instantiate base model
         model = LinearModel(g0=g0, g1=g1, g2=g2, include_activation=False)
 
         # add promoters (two equivalent sets)
         model.add_promoters(k0, k1, k2, perturbed=False)
-        model.add_promoters(k0, k1, k2, perturbed=True)
+        model.add_promoters(k0*perturbation_severity, k1*perturbation_severity, k2*perturbation_severity, perturbed=True)
 
         return model
 
@@ -437,11 +438,12 @@ class HillSweep(Sweep):
 
         # define parameter ranges, log10(val)
         if base is None:
-            base = np.array([0, 0, 0, -2, -3])
+            base = np.array([0, 0, 0, -2, -3, , -1])
 
         # define parameter labels
         labels = ('H', 'k_R', 'k_P',
-                  '\gamma_R', '\gamma_P',)
+                  '\gamma_R', '\gamma_P',
+                  'severity',)
 
         # call parent instantiation
         super().__init__(base, delta, num_samples, labels=labels)
@@ -462,14 +464,14 @@ class HillSweep(Sweep):
         """
 
         # extract parameters
-        n, k1, k2, g1, g2 = parameters
+        n, k1, k2, g1, g2, perturbation_severity = parameters
 
         # instantiate base model
         model = HillModel(g1=g1, g2=g2, include_activation=False)
 
         # add promoters (two equivalent sets)
-        model.add_promoters(k1, .5, n, k2, perturbed=False)
-        model.add_promoters(k1, .5, n, k2, perturbed=True)
+        model.add_promoters(k1*perturbation_severity, .5, n, k2*perturbation_severity, perturbed=False)
+        model.add_promoters(k1*perturbation_severity, .5, n, k2*perturbation_severity, perturbed=True)
 
         return model
 
@@ -507,11 +509,12 @@ class TwoStateSweep(Sweep):
 
         # define parameter ranges, log10(val)
         if base is None:
-            base = np.array([0, 0, 0, -1, -2, -3])
+            base = np.array([0, 0, 0, -1, -2, -3, -1])
 
         # define parameter labels
         labels = ('k_G', 'k_R', 'k_P',
                   '\gamma_G', '\gamma_R', '\gamma_P',
+                  'severity',
                   )
 
         # call parent instantiation
@@ -533,13 +536,13 @@ class TwoStateSweep(Sweep):
         """
 
         # extract parameters
-        k0, k1, k2, g0, g1, g2 = parameters
+        k0, k1, k2, g0, g1, g2, perturbation_severity = parameters
 
         # instantiate base model
         model = TwoStateModel(g0=g0, g1=g1, g2=g2, include_activation=False)
 
         # add promoters (two equivalent sets)
         model.add_promoters(k0, k1, k2, perturbed=False)
-        model.add_promoters(k0, k1, k2, perturbed=True)
+        model.add_promoters(k0*perturbation_severity, k1*perturbation_severity, k2*perturbation_severity, perturbed=True)
 
         return model

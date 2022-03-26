@@ -316,8 +316,8 @@ class SweepFigure:
             i, j = self.axes_dict[ind]
 
             # log scale axes
-            ax.set_xscale('log', subsx=[])
-            ax.set_yscale('log', subsy=[])
+            ax.set_xscale('log')
+            ax.set_yscale('log')
             ax.minorticks_off()
 
             # get bounds of sampled data
