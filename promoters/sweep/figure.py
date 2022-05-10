@@ -656,7 +656,7 @@ class SweepHistogram:
         # set axis limits and scale
         self.ax.set_xlim(*self.xlim)
         if log:
-            self.ax.set_yscale('symlog', linthreshy=1)
+            self.ax.set_yscale('symlog', )
 
         # format axes
         self.ax.spines['right'].set_visible(False)
