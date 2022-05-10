@@ -470,7 +470,7 @@ class HillSweep(Sweep):
         model = HillModel(g1=g1, g2=g2, include_activation=False)
 
         # add promoters (two equivalent sets)
-        model.add_promoters(k1*perturbation_severity, .5, n, k2*perturbation_severity, perturbed=False)
+        model.add_promoters(k1, .5, n, k2, perturbed=False)
         model.add_promoters(k1*perturbation_severity, .5, n, k2*perturbation_severity, perturbed=True)
 
         return model
