@@ -6,7 +6,7 @@ from promoters.simulation.environment import ConditionSimulation
 
 N = 5000
 
-conditions = ('normal', 'diabetic', 'minute', 'carbon_limited', 'hypermetabolic')
+conditions = ('normal', 'diabetic', 'minute', 'carbon_limited', 'hyper_metabolic')
 
 # define promoter strengths
 eta = (1,1,1)
