@@ -205,7 +205,7 @@ class Batch:
         job_script.write('#SBATCH --output ./log/${b_id}/outlog \n')
         job_script.write('#SBATCH --error ./log/${b_id}/errlog \n')
         job_script.write('#SBATCH -J ${b_id} \n')
-        job_script.write('#SBATCH --nodes=1:ppn=1 \n')
+#        job_script.write('#SBATCH --nodes=1:ppn=1 \n')
         job_script.write('#SBATCH --mem=1gb \n\n')
 
         # load python module and metabolism virtual environment
