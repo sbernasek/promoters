@@ -270,7 +270,7 @@ class ConditionSimulation(PerturbationSimulation):
 
         # set simulation conditions
         if conditions is None:
-            conditions = ('normal', 'diabetic', 'minute')
+            conditions = ('normal', 'diabetic', 'hyper_metabolic')
         self.conditions = conditions
 
         # run simulations
