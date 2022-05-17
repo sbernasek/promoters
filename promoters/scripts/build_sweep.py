@@ -52,10 +52,21 @@ sweep.build(
 
 """
 
-# no basal
-python build_sweep.py -N 500 -n 10 -b 5 -s 1 -w 10 -pb 0.0 -ps 50 -sd 250 -d false
+# 22 / 05 / 10
 
-# basal input
-#python build_sweep.py -N 5000 -n 2500 -b 25 -s 0 -w 10 -pb 0.1 -ps 50 -sd 250 -d true
+# LINEAR
+python build_sweep.py -N 5000 -n 1000 -b 25 -s 0 -w 10 -pb 0.0 -ps 50 -sd 250 -d false -cm promoters -m linear
+
+# TWOSTATE
+python build_sweep.py -N 5000 -n 1000 -b 25 -s 0 -w 10 -pb 0.0 -ps 50 -sd 250 -d false -cm promoters -m twostate
+
+# HILL
+python build_sweep.py -N 5000 -n 1000 -b 25 -s 0 -w 10 -pb 0.0 -ps 50 -sd 250 -d false -cm promoters -m hill
+
+# BASAL STIMULUS
+python build_sweep.py -N 5000 -n 1000 -b 25 -s 0 -w 10 -pb 0.1 -ps 50 -sd 250 -d true -cm promoters -m linear
+
+# PULSE SENSITIVE TO METABOLISM
+python build_sweep.py -N 5000 -n 1000 -b 25 -s 0 -w 10 -pb 0.0 -ps 50 -sd 250 -d false -cm promoters -m linear -PS true
 
 """
