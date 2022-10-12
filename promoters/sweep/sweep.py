@@ -425,7 +425,6 @@ class LinearSweep(Sweep):
             model = LinearModel(k0=k0, k1=k1, k2=k2, g0=g0, g1=g1, g2=g2, include_activation=True)
 
             # add feedback (two equivalent sets)
-            model.add_feedback(perturbation_severity*g0, perturbation_severity*g1, perturbation_severity*g2, perturbed=False)
             model.add_feedback(perturbation_severity*g0, perturbation_severity*g1, perturbation_severity*g2, perturbed=True)
 
         return model
@@ -510,7 +509,6 @@ class HillSweep(Sweep):
 
             # add feedback (two equivalent sets)
             assert False, 'Not Implemented'
-            model.add_feedback(k_m, r_n, g1*perturbation_severity, g2*perturbation_severity, perturbed=False)
             model.add_feedback(k_m, r_n, g1*perturbation_severity, g2*perturbation_severity, perturbed=True)            
 
         return model
@@ -595,7 +593,6 @@ class TwoStateSweep(Sweep):
             model = TwoStateModel(k0=k0, k1=k1, k2=k2, g0=g0, g1=g1, g2=g2, include_activation=True)
 
             # add feedback (two equivalent sets)
-            model.add_feedback(perturbation_severity*g0, perturbation_severity*g1, perturbation_severity*g2, perturbed=False)
             model.add_feedback(perturbation_severity*g0, perturbation_severity*g1, perturbation_severity*g2, perturbed=True)
 
         return model
