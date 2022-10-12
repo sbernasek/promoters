@@ -350,11 +350,17 @@ class Batch:
         self.sim_kw = sim_kw
         self.batch_size = batch_size
 
+        # determine the simulation type
+        if comparison == 'promoters':
+            simulation_type = 'promoters'
+        else:
+            simulation_type = 'repressors'
+
         # build simulations
         for i, parameters in enumerate(self.parameters):
             simulation_path = join(self.path, 'simulations', '{:d}'.format(i))
             self.simulation_paths[i] = relpath(simulation_path, self.path)
-            self.build_simulation(parameters, simulation_path, **sim_kw)
+            self.build_simulation(parameters, simulation_type, simulation_path, **sim_kw)
 
         # save serialized batch
         with open(join(self.path, 'batch.pkl'), 'wb') as file:
@@ -382,13 +388,15 @@ class Batch:
                                      allocation=allocation)
 
     @classmethod
-    def build_simulation(cls, parameters, simulation_path, **kwargs):
+    def build_simulation(cls, parameters, simulation_type, simulation_path, **kwargs):
         """
         Builds and saves a simulation instance for a set of parameters.
 
         Args:
 
             parameters (iterable) - parameter sets
+
+            simulation_type (str) - either "repressors" or "promoters"
 
             simulation_path (str) - simulation path
 
@@ -397,7 +405,7 @@ class Batch:
         """
 
         # build model
-        model = cls.build_model(parameters)
+        model = cls.build_model(parameters, simulation_type=simulation_type)
 
         # instantiate simulation
         simulation = ConditionSimulation(model, **kwargs)
