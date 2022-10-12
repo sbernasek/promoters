@@ -54,6 +54,9 @@ sweep.build(
 
 # 22 / 05 / 10
 
+# LINEAR REPRESSORS
+python build_sweep.py -N 5000 -n 1000 -b 25 -s 0 -w 10 -pb 0.0 -ps 50 -sd 250 -d false -cm empirical -m linear
+
 # LINEAR
 python build_sweep.py -N 5000 -n 1000 -b 25 -s 0 -w 10 -pb 0.0 -ps 50 -sd 250 -d false -cm promoters -m linear
 

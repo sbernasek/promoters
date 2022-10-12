@@ -307,13 +307,15 @@ class SimpleSweep(Sweep):
         super().__init__(base, delta, num_samples, labels=labels)
 
     @staticmethod
-    def build_model(parameters):
+    def build_model(parameters, simulation_type='promoters'):
         """
         Returns a model instance defined by the provided parameters.
 
         Args:
 
             parameters (np.ndarray[float]) - model parameters
+
+            simulation_type (str) - either "repressors" or "promoters"
 
         Returns:
 
@@ -324,12 +326,23 @@ class SimpleSweep(Sweep):
         # extract parameters
         k, g, perturbation_severity = parameters
 
-        # instantiate base model
-        model = SimpleModel(k=k, g=g)
 
-        # add promoters (two equivalent sets)
-        model.add_promoters(k, perturbed=False)
-        model.add_promoters(k*perturbation_severity, perturbed=True)
+        if simulation_type == 'promoters':
+
+            # instantiate base model
+            model = SimpleModel(k=k, g=g, include_activation=False)
+
+            # add promoters (two equivalent sets)
+            model.add_promoters(k, perturbed=False)
+            model.add_promoters(k*perturbation_severity, perturbed=True)
+
+        else:
+
+            # instantiate base model
+            model = SimpleModel(k=k, g=g, include_activation=True)
+
+            # add feedback (two equivalent sets)
+            model.add_feedback(perturbation_severity*g, perturbed=True)
 
         return model
 
@@ -378,13 +391,15 @@ class LinearSweep(Sweep):
         super().__init__(base, delta, num_samples, labels=labels)
 
     @staticmethod
-    def build_model(parameters):
+    def build_model(parameters, simulation_type='promoters'):
         """
         Returns a model instance defined by the provided parameters.
 
         Args:
 
             parameters (np.ndarray[float]) - model parameters
+
+            simulation_type (str) - either "repressors" or "promoters"
 
         Returns:
 
@@ -395,12 +410,23 @@ class LinearSweep(Sweep):
         # extract parameters
         k0, k1, k2, g0, g1, g2, perturbation_severity = parameters
 
-        # instantiate base model
-        model = LinearModel(g0=g0, g1=g1, g2=g2, include_activation=False)
+        if simulation_type == 'promoters':
 
-        # add promoters (two equivalent sets)
-        model.add_promoters(k0, k1, k2, perturbed=False)
-        model.add_promoters(k0*perturbation_severity, k1*perturbation_severity, k2*perturbation_severity, perturbed=True)
+            # instantiate base model
+            model = LinearModel(g0=g0, g1=g1, g2=g2, include_activation=False)
+
+            # add promoters (two equivalent sets)
+            model.add_promoters(k0, k1, k2, perturbed=False)
+            model.add_promoters(k0*perturbation_severity, k1*perturbation_severity, k2*perturbation_severity, perturbed=True)
+
+        else:
+
+            # instantiate base model
+            model = LinearModel(k0=k0, k1=k1, k2=k2, g0=g0, g1=g1, g2=g2, include_activation=True)
+
+            # add feedback (two equivalent sets)
+            model.add_feedback(perturbation_severity*g0, perturbation_severity*g1, perturbation_severity*g2, perturbed=False)
+            model.add_feedback(perturbation_severity*g0, perturbation_severity*g1, perturbation_severity*g2, perturbed=True)
 
         return model
 
@@ -449,13 +475,15 @@ class HillSweep(Sweep):
         super().__init__(base, delta, num_samples, labels=labels)
 
     @staticmethod
-    def build_model(parameters):
+    def build_model(parameters, simulation_type='promoters'):
         """
         Returns a model instance defined by the provided parameters.
 
         Args:
 
             parameters (np.ndarray[float]) - model parameters
+
+            simulation_type (str) - either "repressors" or "promoters"
 
         Returns:
 
@@ -466,12 +494,24 @@ class HillSweep(Sweep):
         # extract parameters
         n, k1, k2, g1, g2, perturbation_severity = parameters
 
-        # instantiate base model
-        model = HillModel(g1=g1, g2=g2, include_activation=False)
+        if simulation_type == 'promoters':
 
-        # add promoters (two equivalent sets)
-        model.add_promoters(k1, .5, n, k2, perturbed=False)
-        model.add_promoters(k1*perturbation_severity, .5, n, k2*perturbation_severity, perturbed=True)
+            # instantiate base model
+            model = HillModel(g1=g1, g2=g2, include_activation=False)
+
+            # add promoters (two equivalent sets)
+            model.add_promoters(k1, .5, n, k2, perturbed=False)
+            model.add_promoters(k1*perturbation_severity, .5, n, k2*perturbation_severity, perturbed=True)
+
+        else:
+
+            # instantiate base model
+            model = HillModel(k1=k1, k_m=.5, n=n, k2=k2, g1=g1, g2=g2, include_activation=True)
+
+            # add feedback (two equivalent sets)
+            assert False, 'Not Implemented'
+            model.add_feedback(k_m, r_n, g1*perturbation_severity, g2*perturbation_severity, perturbed=False)
+            model.add_feedback(k_m, r_n, g1*perturbation_severity, g2*perturbation_severity, perturbed=True)            
 
         return model
 
@@ -521,13 +561,15 @@ class TwoStateSweep(Sweep):
         super().__init__(base, delta, num_samples, labels=labels)
 
     @staticmethod
-    def build_model(parameters):
+    def build_model(parameters, simulation_type='promoters'):
         """
         Returns a model instance defined by the provided parameters.
 
         Args:
 
             parameters (np.ndarray[float]) - model parameters
+
+            simulation_type (str) - either "repressors" or "promoters"
 
         Returns:
 
@@ -538,11 +580,22 @@ class TwoStateSweep(Sweep):
         # extract parameters
         k0, k1, k2, g0, g1, g2, perturbation_severity = parameters
 
-        # instantiate base model
-        model = TwoStateModel(g0=g0, g1=g1, g2=g2, include_activation=False)
+        if simulation_type == 'promoters':
 
-        # add promoters (two equivalent sets)
-        model.add_promoters(k0, k1, k2, perturbed=False)
-        model.add_promoters(k0*perturbation_severity, k1*perturbation_severity, k2*perturbation_severity, perturbed=True)
+            # instantiate base model
+            model = TwoStateModel(g0=g0, g1=g1, g2=g2, include_activation=False)
+
+            # add promoters (two equivalent sets)
+            model.add_promoters(k0, k1, k2, perturbed=False)
+            model.add_promoters(k0*perturbation_severity, k1*perturbation_severity, k2*perturbation_severity, perturbed=True)
+
+        else:
+
+            # instantiate base model
+            model = TwoStateModel(k0=k0, k1=k1, k2=k2, g0=g0, g1=g1, g2=g2, include_activation=True)
+
+            # add feedback (two equivalent sets)
+            model.add_feedback(perturbation_severity*g0, perturbation_severity*g1, perturbation_severity*g2, perturbed=False)
+            model.add_feedback(perturbation_severity*g0, perturbation_severity*g1, perturbation_severity*g2, perturbed=True)
 
         return model
