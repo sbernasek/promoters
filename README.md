@@ -45,7 +45,7 @@ System requirements
 Install promoters
 -----------------
 
-Download the [latest distribution](https://github.com/sebastianbernasek/promoters/archive/v1.0.tar.gz).
+Download the [latest distribution](https://github.com/sbernasek/promoters/archive/refs/tags/v1.0.tar.gz).
 
 The simplest method is to install it via ``pip``:
 
