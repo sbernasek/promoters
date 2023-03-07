@@ -13,19 +13,16 @@ Note on reproducibility
 
 This repository contains all of the code used to generate the content in our manuscript. Please note that the vast majority of our figures are based on large-scale simulations that were executed on a high performance computing cluster. These simulations are therefore not well suited for reproduction on a personal computer. We have provided the scripts necessary to reproduce all of our results, but we caution that their direct execution would take a very long time.
 
-As an alternative, we have also provided the output from all of our [completed simulations](https://arch.library.northwestern.edu/concern/generic_works/n296wz31t?locale=en) along with a series of [Jupyter notebooks](https://github.com/sebastianbernasek/promoters/tree/master/notebooks) that walk the user through the steps necessary to analyze these results and reproduce each of our figures. The notebooks also provide users with an opportunity to set up and execute each type of individual simulation that appears in our manuscript. We leave it to the user to design a means to execute these simulations en masse.
+As an alternative, we have also provided the output from all of our [completed simulations](https://doi.org/10.21985/n2-j361-8e86) along with a series of [Jupyter notebooks](https://github.com/sebastianbernasek/promoters/tree/master/notebooks) that walk the user through the steps necessary to analyze these results and reproduce each of our figures. The notebooks also provide users with an opportunity to set up and execute each type of individual simulation that appears in our manuscript. We leave it to the user to design a means to execute these simulations en masse.
 
 
 Supporting data
 ---------------
 
-Our data repository contains the two files needed to reproduce our results:
+[data.zip](https://doi.org/10.21985/n2-j361-8e86) (~15 MB) contains the completed output from each of our simulations.
 
-[simulations.zip](https://arch.library.northwestern.edu/concern/parent/n296wz31t/file_sets/8c97kq60n) (~30 MB) contains the completed output from each of our simulations.
 
-[measurements.zip](https://arch.library.northwestern.edu/concern/parent/n296wz31t/file_sets/6h440s67b) (~1.4 GB) contains segmented and annotated drosophila eye discs that can be analyzed with [FlyEye Analysis](https://github.com/sebastianbernasek/flyeye).
-
-Download each of these files, then unzip their contents to a common directory. In order to successfully run the provided Jupyter notebooks you will need to point the ``../data`` filepath toward this directory.
+Download the file, then unzip its contents to a common directory. In order to successfully run the provided Jupyter notebooks you will need to point the ``../data`` filepath toward this directory.
 
 
 Installation
@@ -83,8 +80,6 @@ Scripts
 
 The ``promoters`` package contains several python scripts in ``promoters/scripts``. Those that may prove helpful include:
 
-  * ``run_pairs.py`` executes a series of pairwise simulations between different types of repressors acting upon different levels of gene expression.
-
   * ``build_sweep.py`` initializes a parameter sweep of a specified model.
 
   * ``run_simulation.py`` runs an individual ``ConditionSimulation``.
@@ -95,14 +90,15 @@ The ``promoters`` package contains several python scripts in ``promoters/scripts
 Jupyter notebooks
 -----------------
 
-  * [ParameterSweeps.ipynb](https://github.com/sebastianbernasek/GRaM/blob/master/notebooks/ParameterSweeps.ipynb) walks the user through conducting a parameter sweep and visualizing the results.
+  * [Example Simulation (Fulll vs Partial Synthesis).ipynb](https://github.com/sbernasek/promoters/blob/master/notebooks/Example%20Simulation%20(Full%20vs%20Partial%20Synthesis).ipynb) walks the user through conducting and analyzing simulations in which auxiliary promoters are lost.
 
-  * [RepressorPairs.ipynb](https://github.com/sebastianbernasek/GRaM/blob/master/notebooks/RepressorPairs.ipynb) walk the user through conducting and analyzing simulations in which one of a pair of repressors is removed. This notebook facilitates direct reproduction of Figures 4G, 7A, and S2H in our manuscript.
+  * [Example Simulation (Fulll vs Partial Repression).ipynb](https://github.com/sbernasek/promoters/blob/master/notebooks/Example%20Simulation%20(Full%20vs%20Partial%20Repression).ipynb) walks the user through conducting and analyzing simulations in which auxiliary repressors are lost.
 
-  * [YanExpressionDynamics.ipynb](https://github.com/sebastianbernasek/GRaM/blob/master/notebooks/YanExpressionDynamics.ipynb) walks the user through our exploration of YanYFP expression dynamics in silico and in vivo. This notebooks enables reproduction of Figure 5 in our manuscript.
+  * [Parameter Sweeps.ipynb](https://github.com/sbernasek/promoters/blob/master/notebooks/Parameter%20Sweeps.ipynb) walks the user through conducting each of our parameter sweeps and visualizing the results.
 
-  * [YanACTSimulations.ipynb](https://github.com/sebastianbernasek/GRaM/blob/master/notebooks/YanACTSimulations.ipynb) walks the user through simulating an example scenario in which all repressors are removed. This notebooks enables reproduction of Figures 6A and 6B in our manuscript.
+  * [Simulating Promoter Loss at Multiple Levels of Output Regulation.ipynb](https://github.com/sbernasek/promoters/blob/master/notebooks/Simulating%20Promoter%20Loss%20at%20Multiple%20Levels%20of%20Output%20Regulation.ipynb) walks the user through conducting and analyzing simulations in which one of a pair of promoters is removed.
 
+  * [Simulating Repressor Loss at Multiple Levels of Output Regulation.ipynb](https://github.com/sbernasek/promoters/blob/master/notebooks/Simulating%20Repressor%20Loss%20at%20Multiple%20Levels%20of%20Output%20Regulation.ipynb) walks the user through conducting and analyzing simulations in which one of a pair of repressors is removed
 
 
 Additional resources
