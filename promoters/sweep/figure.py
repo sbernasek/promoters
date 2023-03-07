@@ -109,7 +109,7 @@ class SweepFigure:
         """
         if bg is None:
             bg = values
-        values = values.astype(np.float)
+        values = values.astype(float)
         rescaled_values = (values - bg.min()) / (bg.max() - bg.min())
         return rescaled_values
 
