@@ -13,13 +13,13 @@ Note on reproducibility
 
 This repository contains all of the code used to generate the content in our manuscript. Please note that the vast majority of our figures are based on large-scale simulations that were executed on a high performance computing cluster. These simulations are therefore not well suited for reproduction on a personal computer. We have provided the scripts necessary to reproduce all of our results, but we caution that their direct execution would take a very long time.
 
-As an alternative, we have also provided the output from all of our [completed simulations](https://arch.library.northwestern.edu/concern/generic_works/n296wz31t?locale=en) along with a series of [Jupyter notebooks](https://github.com/sebastianbernasek/promoters/tree/master/notebooks) that walk the user through the steps necessary to analyze these results and reproduce each of our figures. The notebooks also provide users with an opportunity to set up and execute each type of individual simulation that appears in our manuscript. We leave it to the user to design a means to execute these simulations en masse.
+As an alternative, we have also provided the output from all of our [completed simulations](https://doi.org/10.21985/n2-j361-8e86) along with a series of [Jupyter notebooks](https://github.com/sebastianbernasek/promoters/tree/master/notebooks) that walk the user through the steps necessary to analyze these results and reproduce each of our figures. The notebooks also provide users with an opportunity to set up and execute each type of individual simulation that appears in our manuscript. We leave it to the user to design a means to execute these simulations en masse.
 
 
 Supporting data
 ---------------
 
-[data.zip](https://doi.org/10.21985/n2-j361-8e86) (~30 MB) contains the completed output from each of our simulations.
+[data.zip](https://doi.org/10.21985/n2-j361-8e86) (~15 MB) contains the completed output from each of our simulations.
 
 
 Download the file, then unzip its contents to a common directory. In order to successfully run the provided Jupyter notebooks you will need to point the ``../data`` filepath toward this directory.
